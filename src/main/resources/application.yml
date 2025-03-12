@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: HHH_BE
+
+server:
+  port: 7311
