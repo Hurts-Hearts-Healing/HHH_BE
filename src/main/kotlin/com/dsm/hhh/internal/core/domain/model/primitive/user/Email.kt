@@ -1,7 +1,6 @@
 package com.dsm.hhh.internal.core.domain.model.primitive.user
 
 import com.dsm.hhh.internal.common.assertion.AssertionUtils
-import com.fasterxml.jackson.annotation.JsonValue
 
 /**
  * Email - 사용자 이메일 주소 값 객체

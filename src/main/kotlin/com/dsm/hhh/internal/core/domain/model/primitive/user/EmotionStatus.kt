@@ -1,7 +1,6 @@
 package com.dsm.hhh.internal.core.domain.model.primitive.user
 
 import com.dsm.hhh.internal.common.assertion.AssertionUtils
-import com.fasterxml.jackson.annotation.JsonValue
 
 /**
  * EmotionStatus - 사용자 감정 상태 값 객체

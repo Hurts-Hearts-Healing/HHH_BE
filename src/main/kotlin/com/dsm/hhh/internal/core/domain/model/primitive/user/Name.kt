@@ -1,7 +1,6 @@
 package com.dsm.hhh.internal.core.domain.model.primitive.user
 
 import com.dsm.hhh.internal.common.assertion.AssertionUtils
-import com.fasterxml.jackson.annotation.JsonValue
 
 /**
  * Name - 사용자 실명 값 객체
