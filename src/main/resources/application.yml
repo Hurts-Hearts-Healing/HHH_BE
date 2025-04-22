@@ -2,5 +2,18 @@ spring:
   application:
     name: HHH_BE
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: haspring@dsm.hs.kr
+    password: nefhzscunhjqgyga
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
 server:
   port: 7311
