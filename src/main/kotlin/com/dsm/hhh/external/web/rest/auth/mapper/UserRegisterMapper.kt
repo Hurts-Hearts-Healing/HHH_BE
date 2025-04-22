@@ -22,7 +22,7 @@ import com.dsm.hhh.internal.core.domain.model.primitive.user.HashedPassword
  * @since 2025-03-22
  * @version 1.0
  */
-class UserRegisterMapper {
+class UserRegisterMapper private constructor() {
 
     companion object {
 
