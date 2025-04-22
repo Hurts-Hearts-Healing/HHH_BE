@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 
 /**
- * UserRegisterUseCase - 사용자 회원가입 요청 양식
+ * UserRepositoryImpl - 사용자 도메인 리포지토리 구현체
  * <p>
- *
+ * MongoRepository를 한 번 랩핑한 클래스입니다.
  * <p>
  *
  * @author Kim Seung Won
