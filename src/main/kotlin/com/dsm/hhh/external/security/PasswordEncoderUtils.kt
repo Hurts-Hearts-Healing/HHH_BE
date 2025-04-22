@@ -9,30 +9,32 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
  * BCrypt 알고리즘을 사용한 비밀번호 인코딩/매칭 기능을 제공합니다.
  * </p>
  */
-object PasswordEncoderUtils {
+class PasswordEncoderUtils private constructor() {
 
-    private val encoder = BCryptPasswordEncoder()
+    companion object {
+        private val encoder = BCryptPasswordEncoder()
 
-    /**
-     * 비밀번호를 BCrypt로 해싱합니다.
-     * @param rawPassword 원본 비밀번호
-     * @return 해시된 비밀번호
-     */
-    fun encode(rawPassword: String): String {
-        return encoder.encode(rawPassword)
-    }
+        /**
+         * 비밀번호를 BCrypt로 해싱합니다.
+         * @param rawPassword 원본 비밀번호
+         * @return 해시된 비밀번호
+         */
+        fun encode(rawPassword: String): String {
+            return encoder.encode(rawPassword)
+        }
 
-    /**
-     * 원본 비밀번호와 해시된 비밀번호가 일치하는지 검증합니다.
-     * @param rawPassword 검증할 원본 비밀번호
-     * @param encodedPassword 저장된 해시된 비밀번호
-     * @return 일치 여부
-     */
-    fun matches(
-        rawPassword: String,
-        encodedPassword: String
-    ): Boolean {
-        return encoder.matches(rawPassword, encodedPassword)
+        /**
+         * 원본 비밀번호와 해시된 비밀번호가 일치하는지 검증합니다.
+         * @param rawPassword 검증할 원본 비밀번호
+         * @param encodedPassword 저장된 해시된 비밀번호
+         * @return 일치 여부
+         */
+        fun matches(
+            rawPassword: String,
+            encodedPassword: String
+        ): Boolean {
+            return encoder.matches(rawPassword, encodedPassword)
+        }
     }
 
 }
