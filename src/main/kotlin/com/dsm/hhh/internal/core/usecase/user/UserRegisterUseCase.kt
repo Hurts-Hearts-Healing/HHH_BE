@@ -1,4 +1,4 @@
-package com.dsm.hhh.internal.core.usecase
+package com.dsm.hhh.internal.core.usecase.user
 
 import com.dsm.hhh.internal.core.domain.model.dto.user.UserInternalDTO
 import reactor.core.publisher.Mono
