@@ -1,3 +1,3 @@
 FROM openjdk:17-jdk
-COPY build/libs/Application-0.0.1-SNAPSHOT.jar app.jar
+COPY build/libs/HHH_BE-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
