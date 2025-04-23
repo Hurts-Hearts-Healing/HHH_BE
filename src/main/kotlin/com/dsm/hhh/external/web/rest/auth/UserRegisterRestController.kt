@@ -3,7 +3,7 @@ package com.dsm.hhh.external.web.rest.auth
 import com.dsm.hhh.external.web.rest.auth.form.UserRegisterRequestForm
 import com.dsm.hhh.external.web.rest.auth.mapper.UserRegisterMapper
 import com.dsm.hhh.internal.core.domain.model.primitive.user.Name
-import com.dsm.hhh.internal.core.usecase.UserRegisterUseCase
+import com.dsm.hhh.internal.core.usecase.user.UserRegisterUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -52,7 +52,3 @@ class UserRegisterRestController(
     }
 
 }
-
-data class Test(
-    val name: Name
-)

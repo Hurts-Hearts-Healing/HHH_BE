@@ -22,7 +22,7 @@ import com.dsm.hhh.internal.data.repository.user.UserEntity
  * @since 2025-03-22
  * @version 1.0
  */
-class UserEntityMapper {
+class UserEntityMapper private constructor() {
 
     companion object {
 

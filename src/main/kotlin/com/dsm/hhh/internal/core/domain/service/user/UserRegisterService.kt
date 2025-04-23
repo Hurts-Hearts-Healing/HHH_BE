@@ -1,7 +1,7 @@
 package com.dsm.hhh.internal.core.domain.service.user
 
 import com.dsm.hhh.internal.core.domain.model.dto.user.UserInternalDTO
-import com.dsm.hhh.internal.core.usecase.UserRegisterUseCase
+import com.dsm.hhh.internal.core.usecase.user.UserRegisterUseCase
 import com.dsm.hhh.internal.data.repository.user.UserRepository
 import com.mongodb.MongoTimeoutException
 import org.springframework.dao.DuplicateKeyException
