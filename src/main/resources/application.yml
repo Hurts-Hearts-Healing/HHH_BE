@@ -1,6 +1,9 @@
 spring:
   application:
     name: HHH_BE
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
 
 server:
   port: 7311
