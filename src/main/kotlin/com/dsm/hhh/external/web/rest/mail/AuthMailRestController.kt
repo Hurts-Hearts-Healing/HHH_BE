@@ -1,8 +1,9 @@
 package com.dsm.hhh.external.web.rest.mail
 
+import com.dsm.hhh.external.web.rest.mail.form.AuthMailRequestForm
 import com.dsm.hhh.internal.core.domain.model.dto.mail.AuthMailDTO
 import com.dsm.hhh.internal.core.domain.model.dto.mail.VerifyCodeDTO
-import com.dsm.hhh.internal.core.usecase.AuthMailUseCase
+import com.dsm.hhh.internal.core.usecase.mail.AuthMailUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,6 +20,12 @@ class AuthMailRestController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun save(@RequestBody authMailDTO: AuthMailDTO): VerifyCodeDTO {
-        return authMailUseCase.sendCodeToEmail(authMailDTO)
+        return authMailUseCase.sendCodeToEmail(authMailDTO).block()!!
+    }
+
+    @PostMapping("/verify")
+    fun verify(@RequestBody form: AuthMailRequestForm): Boolean {
+        val verifyCodeDTO = com.dsm.hhh.external.web.rest.mail.mapper.AuthMailMapper.toInternalDTO(form)
+        return authMailUseCase.verifyCode(verifyCodeDTO).block() ?: false
     }
 }
