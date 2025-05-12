@@ -28,7 +28,6 @@ class PasetoTokenUtils(
     @Value("\${security.paseto.token-expiration-hours:24}") private val tokenExpirationHours: Long
 ) {
 
-
     companion object {
         private val keyPair: KeyPair = Keys.keyPairFor(dev.paseto.jpaseto.Version.V2)
         private val secretKey: SecretKey = Keys.secretKey()
