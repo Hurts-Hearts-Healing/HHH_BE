@@ -13,8 +13,8 @@ import com.dsm.hhh.internal.common.assertion.AssertionUtils
  * @property hashedPassword 해시된 비밀번호 문자열
  *
  * @author Kim Seung Won
- * @since 2025-03-22
- * @version 1.0
+ * @since 2025-05-12
+ * @version 1.1
  */
 @JvmInline
 value class HashedPassword(
@@ -27,7 +27,7 @@ value class HashedPassword(
 
     companion object {
         fun fromPassword(password: Password): HashedPassword {
-            return HashedPassword(PasswordEncoderUtils.encode(password.value()))
+            return PasswordEncoderUtils.encode(password)
         }
     }
 
