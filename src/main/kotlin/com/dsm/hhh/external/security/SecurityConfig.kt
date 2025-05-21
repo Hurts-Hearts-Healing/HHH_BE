@@ -45,6 +45,7 @@ class SecurityConfig(
             .logout { logout -> logout.disable() }
             .authorizeExchange { authorizeExchangeSpec -> authorizeExchangeSpec
                 .pathMatchers(HttpMethod.POST, RestApiSpec.AUTH_LOGIN, RestApiSpec.AUTH_REGISTER).permitAll()
+                .pathMatchers(HttpMethod.POST, "/mail", "/mail/verify").permitAll()
                 .anyExchange().authenticated()
             }
             .headers { headers -> headers.frameOptions { frameOptionsSpec -> frameOptionsSpec.disable()} }
