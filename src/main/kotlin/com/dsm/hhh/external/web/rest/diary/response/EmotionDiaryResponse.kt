@@ -13,3 +13,7 @@ class EmotionDiaryResponse(
 
     val createdAt: CreatedAt?,
 )
+
+class EmotionDiariesResponse(
+    val diaries: List<EmotionDiaryResponse>
+)

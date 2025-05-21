@@ -3,6 +3,7 @@ package com.dsm.hhh.external.web.rest.diary
 import com.dsm.hhh.external.web.rest.RestApiSpec
 import com.dsm.hhh.external.web.rest.diary.form.EmotionDiaryWriteRequestForm
 import com.dsm.hhh.external.web.rest.diary.mapper.EmotionDiaryMapper
+import com.dsm.hhh.external.web.rest.diary.response.EmotionDiariesResponse
 import com.dsm.hhh.external.web.rest.diary.response.EmotionDiaryResponse
 import com.dsm.hhh.internal.core.usecase.diary.EmotionDiaryUseCase
 import org.springframework.http.HttpStatus
@@ -29,9 +30,11 @@ private class EmotionDiaryRestController(
 
     @GetMapping(RestApiSpec.DIARY_ALL)
     @ResponseStatus(HttpStatus.OK)
-    fun getMyEmotionDiaries(): Flux<EmotionDiaryResponse> {
+    fun getMyEmotionDiaries(): Mono<EmotionDiariesResponse> {
         return emotionDiaryUseCase.getMyDiaries()
             .map(EmotionDiaryMapper::emotionDiaryDTOToEmotionDiaryResponse)
+            .collectList()
+            .map { diaries -> EmotionDiariesResponse(diaries) }
     }
 
 }
