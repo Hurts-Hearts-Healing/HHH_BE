@@ -101,4 +101,21 @@ class AssertionUtils private constructor() {
         }
     }
 
+    /**
+     * 숫자가 지정된 자릿수를 만족하는지 검증합니다.
+     * @param number 검증할 숫자
+     * @param digitLength 요구되는 자릿수
+     * @param message 검증 실패 시 예외 메시지
+     * @throws IllegalArgumentException 숫자가 요구된 자릿수를 만족하지 않을 경우
+     */
+    fun assertDigitLength(
+        number: String,
+        digitLength: Int,
+        message: String
+    ) {
+        if (number.length != digitLength) {
+            throw IllegalArgumentException(message)
+        }
+    }
+
 }
