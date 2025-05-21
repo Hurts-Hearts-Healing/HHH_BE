@@ -33,6 +33,4 @@ class UserRegisterRequestForm(
 
     val breakupDate: BreakupDate,
     val emotionStatus: EmotionStatus
-) {
-
-}
+)

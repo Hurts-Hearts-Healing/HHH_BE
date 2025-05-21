@@ -9,6 +9,7 @@ import com.dsm.hhh.internal.core.domain.model.primitive.user.HashedPassword
 import com.dsm.hhh.internal.core.domain.model.primitive.user.Name
 import com.dsm.hhh.internal.core.domain.model.primitive.user.RegisteredAt
 import com.dsm.hhh.internal.core.domain.model.primitive.user.UserId
+import com.dsm.hhh.internal.data.repository.user.mapper.UserEntityMapper
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import java.time.LocalDateTime
@@ -30,52 +31,20 @@ class UserRepositoryImpl(
 ) : UserRepository {
 
     override fun save(userInternalDTO: UserInternalDTO): Mono<UserInternalDTO> {
-        val entity = toEntity(userInternalDTO)
+        val entity = UserEntityMapper.toEntity(userInternalDTO)
         return userMongoRepository.save(entity)
-            .map { toDTO(it) }
+            .map(UserEntityMapper::toDTO)
     }
 
     override fun findByEmail(email: Email): Mono<UserInternalDTO> {
         return userMongoRepository.findByEmail(email.value())
-            .map { toDTO(it) }
+            .map(UserEntityMapper::toDTO)
+
     }
 
-    // Entity -> DTO 변환
-    private fun toDTO(entity: UserEntity): UserInternalDTO {
-        return UserInternalDTO(
-            userId = entity.id?.let { UserId(it) },
-            name = Name(entity.name),
-            email = Email(entity.email),
-            password = HashedPassword(entity.password),
-            birthday = Birthday(entity.birthday),
-            breakupDate = BreakupDate(entity.breakupDate),
-            emotionStatus = EmotionStatus(entity.emotionStatus),
-            registeredAt = entity.registeredAt?.let { RegisteredAt(it) }
-        )
+    override fun findById(userId: UserId): Mono<UserInternalDTO> {
+        return userMongoRepository.findById(userId.value())
+            .map(UserEntityMapper::toDTO)
     }
 
-    // DTO -> Entity 변환
-    private fun toEntity(dto: UserInternalDTO): UserEntity {
-        return if (dto.userId != null) {
-            UserEntity(
-                id = dto.userId.value(),
-                name = dto.name.value(),
-                email = dto.email.value(),
-                password = dto.password.value(),
-                birthday = dto.birthday.value(),
-                breakupDate = dto.breakupDate.value(),
-                emotionStatus = dto.emotionStatus.value(),
-                registeredAt = dto.registeredAt?.value() ?: LocalDateTime.now()
-            )
-        } else {
-            UserEntity(
-                name = dto.name.value(),
-                email = dto.email.value(),
-                password = dto.password.value(),
-                birthday = dto.birthday.value(),
-                breakupDate = dto.breakupDate.value(),
-                emotionStatus = dto.emotionStatus.value()
-            )
-        }
-    }
 }

@@ -61,7 +61,7 @@ class PasetoTokenUtils(
      */
     fun validateToken(token: String): Mono<Boolean> {
         return parseToken(token)
-            .map { paseto -> paseto.claims.expiration.isBefore(Instant.now()) }
+            .map { paseto -> paseto.claims.expiration.isAfter(Instant.now()) }
             .onErrorResume { Mono.just(false) }
     }
 
@@ -74,7 +74,7 @@ class PasetoTokenUtils(
         return Mono.fromCallable {
             val parser = Pasetos.parserBuilder()
                 .setSharedSecret(secretKey)
-                .setPublicKey(keyPair.getPublic())
+                .setPublicKey(keyPair.public)
                 .build()
 
             parser.parse(token)
@@ -90,4 +90,5 @@ class PasetoTokenUtils(
         return parseToken(token)
             .map { paseto -> paseto.claims.subject }
     }
+
 } 

@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono
  * @version 1.0
  */
 @RestController
-class UserLoginRestController(
+private class UserLoginRestController(
     private val userLoginUseCase: UserLoginUseCase
 ) {
 

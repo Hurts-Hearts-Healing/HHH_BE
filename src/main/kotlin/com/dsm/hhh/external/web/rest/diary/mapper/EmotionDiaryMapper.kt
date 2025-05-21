@@ -1,6 +1,7 @@
 package com.dsm.hhh.external.web.rest.diary.mapper
 
 import com.dsm.hhh.external.web.rest.diary.form.EmotionDiaryWriteRequestForm
+import com.dsm.hhh.external.web.rest.diary.response.EmotionDiaryResponse
 import com.dsm.hhh.internal.core.domain.model.dto.diary.EmotionDiaryInternalDTO
 
 class EmotionDiaryMapper private constructor() {
@@ -11,6 +12,15 @@ class EmotionDiaryMapper private constructor() {
             return EmotionDiaryInternalDTO(
                 title = emotionDiaryWriteRequestForm.title,
                 note = emotionDiaryWriteRequestForm.note
+            )
+        }
+
+        fun emotionDiaryDTOToEmotionDiaryResponse(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): EmotionDiaryResponse {
+            return EmotionDiaryResponse(
+                diaryId = emotionDiaryInternalDTO.diaryId,
+                title = emotionDiaryInternalDTO.title,
+                note = emotionDiaryInternalDTO.note,
+                createdAt = emotionDiaryInternalDTO.createdAt
             )
         }
 

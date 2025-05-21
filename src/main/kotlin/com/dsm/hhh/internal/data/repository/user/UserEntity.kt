@@ -1,5 +1,6 @@
 package com.dsm.hhh.internal.data.repository.user
 
+import com.dsm.hhh.internal.data.repository.CollectionSpec
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
@@ -26,7 +27,7 @@ import java.time.LocalDateTime
  * @since 2025-03-22
  * @version 1.0
  */
-@Document(collection = "user-collection") // TODO: 현재 하드 코딩이지만, 추후 개선 예정
+@Document(collection = CollectionSpec.USER)
 class UserEntity private constructor(
     @Id
     val id: String?,

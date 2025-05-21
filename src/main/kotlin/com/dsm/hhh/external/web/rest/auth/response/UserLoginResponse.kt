@@ -12,6 +12,6 @@ package com.dsm.hhh.external.web.rest.auth.response
  * @since 2025-05-12
  * @version 1.0
  */
-data class UserLoginResponse(
+class UserLoginResponse(
     val token: String
 )

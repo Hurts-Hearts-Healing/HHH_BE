@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 class PasswordEncoderUtils private constructor() {
 
     companion object {
+
         private val encoder = BCryptPasswordEncoder()
 
         /**
@@ -39,6 +40,7 @@ class PasswordEncoderUtils private constructor() {
         ): Boolean {
             return encoder.matches(rawPassword.value(), encodedPassword.value())
         }
+
     }
 
 }

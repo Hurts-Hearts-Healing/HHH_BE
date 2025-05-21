@@ -1,5 +1,6 @@
 package com.dsm.hhh.internal.data.repository.diary
 
+import com.dsm.hhh.internal.data.repository.CollectionSpec
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
@@ -21,7 +22,7 @@ import java.time.LocalDate
  * @since 2025-04-07
  * @version 1.0
  */
-@Document(collection = "diary-collection")
+@Document(collection = CollectionSpec.DIARY)
 class EmotionDiaryEntity private constructor(
     @Id
     val id: String?,
@@ -31,12 +32,15 @@ class EmotionDiaryEntity private constructor(
     val note: String,
 
     @Field(targetType = FieldType.DATE_TIME)
-    val createdAt: LocalDate = LocalDate.now()
+    val createdAt: LocalDate,
+
+    val userId: String
 ) {
 
     constructor(
         title: String,
-        note: String
-    ) : this(null, title, note)
+        note: String,
+        userId: String
+    ) : this(null, title, note, LocalDate.now(), userId)
 
 }
