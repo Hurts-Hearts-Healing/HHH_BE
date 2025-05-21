@@ -4,6 +4,7 @@ import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import com.dsm.hhh.internal.core.domain.model.primitive.diary.DiaryId
 import com.dsm.hhh.internal.core.domain.model.primitive.diary.Note
 import com.dsm.hhh.internal.core.domain.model.primitive.diary.Title
+import com.dsm.hhh.internal.core.domain.model.primitive.user.UserId
 
 /**
  * EmotionDiaryEntity - 계층별 데이터 변환을 위한 감정 일기 도메인 데이터 클래스
@@ -20,18 +21,20 @@ import com.dsm.hhh.internal.core.domain.model.primitive.diary.Title
  * @since 2025-04-21
  * @version 1.0
  */
-data class EmotionDiaryInternalDTO(
+class EmotionDiaryInternalDTO(
     val diaryId: DiaryId?,
 
     val title: Title,
     val note: Note,
 
-    val createdAt: CreatedAt?
+    val createdAt: CreatedAt?,
+
+    var userId: UserId?
 ) {
 
     constructor(
         title: Title,
         note: Note
-    ): this(null, title, note, null)
+    ): this(null, title, note, null, null)
 
 }

@@ -6,5 +6,4 @@ import com.dsm.hhh.internal.core.domain.model.primitive.diary.Title
 class EmotionDiaryWriteRequestForm(
     val title: Title,
     val note: Note,
-) {
-}
+)
