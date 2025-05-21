@@ -1,6 +1,7 @@
 package com.dsm.hhh.internal.data.repository.user
 
 import com.dsm.hhh.internal.core.domain.model.dto.user.UserInternalDTO
+import com.dsm.hhh.internal.core.domain.model.primitive.user.Email
 import reactor.core.publisher.Mono
 
 /**
@@ -22,4 +23,11 @@ interface UserRepository {
      * @return 저장된 사용자 정보를 담은 Mono
      */
     fun save(userInternalDTO: UserInternalDTO): Mono<UserInternalDTO>
+    
+    /**
+     * 이메일로 사용자를 조회합니다.
+     * @param email 조회할 사용자의 이메일
+     * @return 조회된 사용자 정보를 담은 Mono 또는 빈 Mono
+     */
+    fun findByEmail(email: Email): Mono<UserInternalDTO>
 }
