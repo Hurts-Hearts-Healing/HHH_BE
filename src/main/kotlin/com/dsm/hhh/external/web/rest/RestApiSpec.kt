@@ -6,6 +6,8 @@ object RestApiSpec {
     const val AUTH_APIS = "/api/auth/**"
     const val AUTH_LOGIN = "/api/auth/login"
     const val AUTH_REGISTER = "/api/auth/register"
+    const val MAIL = "/mail"
+    const val MAILVERIFY = "/mail/verify"
 
     const val DIARY = "/api/diary"
     const val DIARY_APIS = "/api/diary/**"
