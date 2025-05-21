@@ -1,7 +1,9 @@
 package com.dsm.hhh.internal.core.domain.service.user
 
+import com.dsm.hhh.external.error.ErrorCode
 import com.dsm.hhh.external.security.PasswordEncoderUtils
 import com.dsm.hhh.external.security.PasetoTokenUtils
+import com.dsm.hhh.internal.common.exception.CustomExceptionFactory
 import com.dsm.hhh.internal.core.domain.model.primitive.user.Email
 import com.dsm.hhh.internal.core.domain.model.primitive.user.Password
 import com.dsm.hhh.internal.core.usecase.user.UserLoginUseCase
@@ -32,18 +34,18 @@ private class UserLoginService(
      * @return 생성된 토큰
      */
     override fun login(email: Email, password: Password): Mono<String> {
-
-        return userRepository.findByEmail(email)
-            .switchIfEmpty(Mono.error(RuntimeException("사용자를 찾을 수 없습니다.")))
+        return userRepository.findByEmail(email) // TODO: 예외 개선 필요
+            .switchIfEmpty(Mono.error(CustomExceptionFactory.notFound(ErrorCode.AUTH_002)))
             .flatMap { user ->
                 if (PasswordEncoderUtils.matches(password, user.password)) {
                     pasetoTokenUtils.generateToken(
                         userId = user.userId?.value()
-                            ?: return@flatMap Mono.error(RuntimeException("사용자 ID를 찾을 수 없습니다."))
+                            ?: return@flatMap Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_003))
                     )
                 } else {
-                    Mono.error(RuntimeException("비밀번호가 일치하지 않습니다."))
+                    Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_001))
                 }
             }
     }
+
 }

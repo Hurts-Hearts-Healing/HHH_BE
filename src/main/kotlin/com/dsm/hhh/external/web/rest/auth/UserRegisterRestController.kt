@@ -1,13 +1,12 @@
 package com.dsm.hhh.external.web.rest.auth
 
+import com.dsm.hhh.external.web.rest.RestApiSpec
 import com.dsm.hhh.external.web.rest.auth.form.UserRegisterRequestForm
 import com.dsm.hhh.external.web.rest.auth.mapper.UserRegisterMapper
-import com.dsm.hhh.internal.core.domain.model.primitive.user.Name
 import com.dsm.hhh.internal.core.usecase.user.UserRegisterUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
@@ -31,8 +30,7 @@ import reactor.core.publisher.Mono
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/auth")
-class UserRegisterRestController(
+private class UserRegisterRestController(
     private val userRegisterUseCase: UserRegisterUseCase
 ) {
 
@@ -43,7 +41,7 @@ class UserRegisterRestController(
      *
      * @HTTP 201 - 회원가입 성공
      */
-    @PostMapping
+    @PostMapping(RestApiSpec.AUTH_REGISTER)
     @ResponseStatus(HttpStatus.CREATED)
     fun register(@RequestBody requestForm: UserRegisterRequestForm): Mono<Void> {
         val userInternalDTO = UserRegisterMapper.toInternalDTO(requestForm)

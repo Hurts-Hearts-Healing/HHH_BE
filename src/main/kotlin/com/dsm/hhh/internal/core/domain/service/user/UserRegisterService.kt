@@ -1,5 +1,7 @@
 package com.dsm.hhh.internal.core.domain.service.user
 
+import com.dsm.hhh.external.error.ErrorCode
+import com.dsm.hhh.internal.common.exception.CustomExceptionFactory
 import com.dsm.hhh.internal.core.domain.model.dto.user.UserInternalDTO
 import com.dsm.hhh.internal.core.usecase.user.UserRegisterUseCase
 import com.dsm.hhh.internal.data.repository.user.UserRepository
@@ -21,7 +23,7 @@ import reactor.core.publisher.Mono
  */
 @Service
 private class UserRegisterService(
-    val userRepository: UserRepository
+    private val userRepository: UserRepository
 ): UserRegisterUseCase {
 
     /**
@@ -29,12 +31,12 @@ private class UserRegisterService(
      * 저장 과정에서 발생할 수 있는 예외를 처리합니다.
      */
     override fun register(userInternalDTO: UserInternalDTO): Mono<Void> {
-        return userRepository.save(userInternalDTO)
-            .onErrorResume { // TODO: 예외 개선 필요
+        return userRepository.save(userInternalDTO) // TODO: 이메일 검증 로직 추가 필요
+            .onErrorResume {
                 when(it) {
-                    is DuplicateKeyException -> throw IllegalArgumentException("이미 가입된 이메일입니다.") // 409
-                    is MongoTimeoutException -> throw RuntimeException("MongoDB 연결에 문제가 생겼습니다.") // 500
-                    else -> throw RuntimeException("알 수 없는 오류 발생") // 500
+                    is DuplicateKeyException -> throw CustomExceptionFactory.conflict(ErrorCode.AUTH_004)
+                    is MongoTimeoutException -> throw CustomExceptionFactory.serviceUnavailable(ErrorCode.INTERNAL_001)
+                    else -> throw CustomExceptionFactory.internalServerError(ErrorCode.INTERNAL_002)
                 }
             }
             .then()
