@@ -11,7 +11,7 @@ object RestApiSpec {
     const val DIARY_APIS = "/api/diary/**"
     const val DIARY_CREATE = "/api/diary"
     const val DIARY_UPDATE = "/api/diary/{id}"
-    const val DIARY_DELETE = "/api/diary/{id}"
     const val DIARY_ONE = "/api/diary/{id}"
+    const val DIARY_ALL = "/api/diary"
 
 }
