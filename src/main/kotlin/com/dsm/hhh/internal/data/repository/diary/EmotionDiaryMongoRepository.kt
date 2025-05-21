@@ -1,6 +1,7 @@
 package com.dsm.hhh.internal.data.repository.diary
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
+import reactor.core.publisher.Flux
 
 /**
  * EmotionDiaryMongoRepository - Spring Data MongoDB Reactive Repository
@@ -10,7 +11,11 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository
  * </p>
  *
  * @author Kim Seung Won
- * @since 2025-04-07
- * @version 1.0
+ * @since 2025-05-01
+ * @version 1.1
  */
-interface EmotionDiaryMongoRepository: ReactiveMongoRepository<EmotionDiaryEntity, String>
+interface EmotionDiaryMongoRepository: ReactiveMongoRepository<EmotionDiaryEntity, String> {
+    
+    fun findByUserId(userId: String): Flux<EmotionDiaryEntity>
+
+}
