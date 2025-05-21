@@ -1,5 +1,7 @@
 package com.dsm.hhh.external.security
 
+import com.dsm.hhh.external.error.ErrorCode
+import com.dsm.hhh.internal.common.exception.CustomExceptionFactory
 import dev.paseto.jpaseto.PasetoException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.server.reactive.ServerHttpRequest
@@ -35,20 +37,19 @@ class PasetoAuthenticationFilter(
         val token = extractToken(exchange.request)
 
         return if (token != null) {
-            try {
-                val authorities = listOf(SimpleGrantedAuthority("ROLE_USER"))
+            val authorities = listOf(SimpleGrantedAuthority("ROLE_USER")) // TODO: 현재 역할 관리는 없음
 
-                pasetoTokenUtils.parseClaims(token)
-                    .map { claims ->
-                        UsernamePasswordAuthenticationToken(claims.subject, null, authorities)
-                    }
-                    .flatMap { authentication ->
-                        chain.filter(exchange)
-                            .contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication))
-                    }
-            } catch (e: PasetoException) {
-                chain.filter(exchange)
-            }
+            pasetoTokenUtils.parseClaims(token)
+                .map { claims ->
+                    UsernamePasswordAuthenticationToken(claims.subject, null, authorities)
+                }
+                .flatMap { authentication ->
+                    chain.filter(exchange)
+                        .contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication))
+                }
+                .onErrorResume(PasetoException::class.java) {
+                    Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_006))
+                }
         } else {
             chain.filter(exchange)
         }
@@ -68,4 +69,5 @@ class PasetoAuthenticationFilter(
             null
         }
     }
+
 } 
