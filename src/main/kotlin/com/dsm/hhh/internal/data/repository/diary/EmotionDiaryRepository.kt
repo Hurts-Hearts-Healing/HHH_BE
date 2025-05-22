@@ -1,6 +1,7 @@
 package com.dsm.hhh.internal.data.repository.diary
 
 import com.dsm.hhh.internal.core.domain.model.dto.diary.EmotionDiaryInternalDTO
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import com.dsm.hhh.internal.core.domain.model.primitive.diary.DiaryId
 import com.dsm.hhh.internal.core.domain.model.primitive.user.UserId
 import reactor.core.publisher.Flux
@@ -22,6 +23,8 @@ interface EmotionDiaryRepository {
     fun save(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): Mono<Void>
     
     fun findByUserId(userId: UserId): Flux<EmotionDiaryInternalDTO>
+
+    fun findByUserIdAndCreatedAt(userId: UserId, createdAt: CreatedAt): Mono<EmotionDiaryInternalDTO>
 
     fun findById(dirayId: DiaryId): Mono<EmotionDiaryInternalDTO>
 

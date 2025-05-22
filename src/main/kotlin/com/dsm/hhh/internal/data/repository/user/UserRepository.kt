@@ -34,4 +34,6 @@ interface UserRepository {
 
     fun findById(userId: UserId): Mono<UserInternalDTO>
 
+    fun deleteById(userId: UserId): Mono<Void>
+
 }

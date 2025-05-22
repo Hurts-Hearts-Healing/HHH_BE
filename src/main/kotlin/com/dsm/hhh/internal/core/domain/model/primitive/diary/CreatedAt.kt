@@ -14,4 +14,8 @@ value class CreatedAt(
 
     fun value() = createdAt
 
+    companion object {
+        fun now() = CreatedAt(LocalDate.now())
+    }
+
 }

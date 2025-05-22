@@ -2,6 +2,8 @@ package com.dsm.hhh.internal.data.repository.diary
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import java.time.LocalDate
 
 /**
  * EmotionDiaryMongoRepository - Spring Data MongoDB Reactive Repository
@@ -17,5 +19,7 @@ import reactor.core.publisher.Flux
 interface EmotionDiaryMongoRepository: ReactiveMongoRepository<EmotionDiaryEntity, String> {
     
     fun findByUserId(userId: String): Flux<EmotionDiaryEntity>
+
+    fun findByUserIdAndCreatedAt(userId: String, createdAt: LocalDate): Mono<EmotionDiaryEntity>
 
 }

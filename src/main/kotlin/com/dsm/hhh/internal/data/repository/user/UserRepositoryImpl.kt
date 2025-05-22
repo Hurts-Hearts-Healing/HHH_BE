@@ -1,18 +1,11 @@
 package com.dsm.hhh.internal.data.repository.user
 
 import com.dsm.hhh.internal.core.domain.model.dto.user.UserInternalDTO
-import com.dsm.hhh.internal.core.domain.model.primitive.user.Birthday
-import com.dsm.hhh.internal.core.domain.model.primitive.user.BreakupDate
 import com.dsm.hhh.internal.core.domain.model.primitive.user.Email
-import com.dsm.hhh.internal.core.domain.model.primitive.user.EmotionStatus
-import com.dsm.hhh.internal.core.domain.model.primitive.user.HashedPassword
-import com.dsm.hhh.internal.core.domain.model.primitive.user.Name
-import com.dsm.hhh.internal.core.domain.model.primitive.user.RegisteredAt
 import com.dsm.hhh.internal.core.domain.model.primitive.user.UserId
 import com.dsm.hhh.internal.data.repository.user.mapper.UserEntityMapper
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
-import java.time.LocalDateTime
 
 /**
  * UserRepositoryImpl - 사용자 도메인 리포지토리 구현체
@@ -25,8 +18,8 @@ import java.time.LocalDateTime
  * @since 2025-03-25
  * @version 1.0
  */
-@Component
-class UserRepositoryImpl(
+@Repository
+private class UserRepositoryImpl(
     private val userMongoRepository: UserMongoRepository
 ) : UserRepository {
 
@@ -45,6 +38,10 @@ class UserRepositoryImpl(
     override fun findById(userId: UserId): Mono<UserInternalDTO> {
         return userMongoRepository.findById(userId.value())
             .map(UserEntityMapper::toDTO)
+    }
+
+    override fun deleteById(userId: UserId): Mono<Void> {
+        return userMongoRepository.deleteById(userId.value())
     }
 
 }
