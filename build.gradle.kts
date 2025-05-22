@@ -22,7 +22,7 @@ dependencies {
 
 	// kotlin
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
 
 	// security
 	implementation("org.springframework.boot:spring-boot-starter-security")
