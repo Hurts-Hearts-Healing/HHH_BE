@@ -1,6 +1,7 @@
 package com.dsm.hhh.internal.data.repository.diary
 
 import com.dsm.hhh.internal.core.domain.model.dto.diary.EmotionDiaryInternalDTO
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import com.dsm.hhh.internal.core.domain.model.primitive.diary.DiaryId
 import com.dsm.hhh.internal.core.domain.model.primitive.user.UserId
 import com.dsm.hhh.internal.data.repository.diary.mapper.EmotionDiaryEntityMapper
@@ -22,6 +23,14 @@ class EmotionDiaryRepositoryImpl(
 
     override fun findByUserId(userId: UserId): Flux<EmotionDiaryInternalDTO> {
         return emotionDiaryMongoRepository.findByUserId(userId.value())
+            .map(EmotionDiaryEntityMapper::toInternalDTO)
+    }
+
+    override fun findByUserIdAndCreatedAt(
+        userId: UserId,
+        createdAt: CreatedAt
+    ): Mono<EmotionDiaryInternalDTO> {
+        return emotionDiaryMongoRepository.findByUserIdAndCreatedAt(userId.value(), createdAt.value())
             .map(EmotionDiaryEntityMapper::toInternalDTO)
     }
 

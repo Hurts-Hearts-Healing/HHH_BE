@@ -1,5 +1,6 @@
 package com.dsm.hhh.internal.data.repository.diary
 
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.DiaryId
 import com.dsm.hhh.internal.data.repository.CollectionSpec
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -42,5 +43,12 @@ class EmotionDiaryEntity private constructor(
         note: String,
         userId: String
     ) : this(null, title, note, LocalDate.now(), userId)
+
+    constructor(
+        diaryId: String,
+        title: String,
+        note: String,
+        userId: String
+    ) : this(diaryId, title, note, LocalDate.now(), userId)
 
 }

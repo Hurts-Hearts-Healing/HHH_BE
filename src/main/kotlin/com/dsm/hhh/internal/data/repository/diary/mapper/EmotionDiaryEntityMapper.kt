@@ -15,7 +15,13 @@ class EmotionDiaryEntityMapper private constructor() {
     companion object {
 
         fun toEntity(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): EmotionDiaryEntity {
-            return EmotionDiaryEntity(
+            return if (emotionDiaryInternalDTO.diaryId == null) EmotionDiaryEntity(
+                title = emotionDiaryInternalDTO.title.value(),
+                note = emotionDiaryInternalDTO.note.value(),
+                userId = emotionDiaryInternalDTO.userId?.value()
+                    ?: throw CustomExceptionFactory.internalServerError(ErrorCode.INTERNAL_002)
+            ) else EmotionDiaryEntity(
+                diaryId = emotionDiaryInternalDTO.diaryId.value(),
                 title = emotionDiaryInternalDTO.title.value(),
                 note = emotionDiaryInternalDTO.note.value(),
                 userId = emotionDiaryInternalDTO.userId?.value()

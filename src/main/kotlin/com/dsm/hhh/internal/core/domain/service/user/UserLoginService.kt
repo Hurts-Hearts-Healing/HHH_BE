@@ -34,14 +34,14 @@ private class UserLoginService(
      * @return 생성된 토큰
      */
     override fun login(email: Email, password: Password): Mono<String> {
-        return userRepository.findByEmail(email) // TODO: 예외 개선 필요
+        return userRepository.findByEmail(email)
             .switchIfEmpty(Mono.error(CustomExceptionFactory.notFound(ErrorCode.AUTH_002)))
             .flatMap { user ->
                 if (PasswordEncoderUtils.matches(password, user.password)) {
-                    pasetoTokenUtils.generateToken(
-                        userId = user.userId?.value()
-                            ?: return@flatMap Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_003))
-                    )
+                    val userId = user.userId?.value()
+                        ?: return@flatMap Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_003))
+
+                    pasetoTokenUtils.generateToken(userId)
                 } else {
                     Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_001))
                 }
