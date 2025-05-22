@@ -16,4 +16,6 @@ object RestApiSpec {
     const val DIARY_ONE = "/api/diary/{id}"
     const val DIARY_ALL = "/api/diary"
 
+    const val EMOTION_CREATE = "/api/emotion"
+    const val EMOTION_READ = "/api/emotion"
 }

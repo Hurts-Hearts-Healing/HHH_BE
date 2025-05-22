@@ -6,4 +6,6 @@ object CollectionSpec {
 
     const val DIARY = "diary-collection"
 
+    const val EMOTION = "emotion-collection"
+
 }
