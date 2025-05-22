@@ -1,7 +1,9 @@
 package com.dsm.hhh.external.web.rest.mail.form
 
+import com.dsm.hhh.internal.core.domain.model.primitive.mail.VerifyCode
+import com.dsm.hhh.internal.core.domain.model.primitive.user.Email
+
 class AuthMailRequestForm(
-    val email: String,
-    val verifyCode: String
-) {
-}
+    val email: Email,
+    val verifyCode: VerifyCode
+)
