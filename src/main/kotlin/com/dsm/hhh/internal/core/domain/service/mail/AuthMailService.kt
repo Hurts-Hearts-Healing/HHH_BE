@@ -1,5 +1,6 @@
 package com.dsm.hhh.internal.core.domain.service.mail
 
+import com.dsm.hhh.internal.core.domain.component.mail.CompletedEmailVerificationComponent
 import com.dsm.hhh.internal.core.domain.model.dto.mail.AuthMailDTO
 import com.dsm.hhh.internal.core.domain.model.dto.mail.VerifyCodeDTO
 import com.dsm.hhh.internal.core.domain.model.primitive.mail.VerifyCode
@@ -12,7 +13,8 @@ import java.util.concurrent.ConcurrentHashMap
 
 @Service
 private class AuthMailService(
-    private val javaMailSender: JavaMailSender
+    private val javaMailSender: JavaMailSender,
+    private val completedEmailVerificationComponent: CompletedEmailVerificationComponent
 ) : AuthMailUseCase {
     private val verificationStorage = ConcurrentHashMap<String, String>()
 
@@ -33,9 +35,14 @@ private class AuthMailService(
 
     override fun verifyCode(verifyCodeDTO: VerifyCodeDTO): Mono<Boolean> {
         val storedCode = verificationStorage[verifyCodeDTO.email.value()]
-        val isMatch = (storedCode == verifyCodeDTO.verifyCode.value())
 
-        return Mono.just(isMatch)
+        if (storedCode == verifyCodeDTO.verifyCode.value()) {
+            completedEmailVerificationComponent.saveCompletedEmail(verifyCodeDTO.email)
+
+            return Mono.just(true)
+        }
+
+        return Mono.just(false)
     }
 
 }
