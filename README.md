@@ -1,9 +1,31 @@
 # HHH
+
+## Table of Contents
+- [Introduce Project](#introduce-project)
+- [Development Docs](#development-docs)
+- [Architecture](#architecture)
+    - [Architecture Structure](#architecture-structure)
+    - [Layer Description](#layer-description)
+    - [Bounded Context](#bounded-context)
+    - [Tech Stack](#tech-stack)
+- [Package Structure](#package-structure)
+- [Unified Modeling Language](#unified-modeling-language)
+
+---
+
+## Introduce Project
 AI기반 이별 후유증 극복 서비스 HHH입니다.
 
 해당 레포지토리는 HHH 서비스의 백엔드 파트입니다.
 
-## Architecture Structure
+## Development Docs
+- [Domain Primitive가 팀 컨벤션까지 확장된 이유 및 근거 정리 - 김승원](https://orange-middle-cbd.notion.site/Domain-Primitive-1c069c2ee7df80eda993f09acad7738f?pvs=4)
+- [Password Encoder를 Spring Bean으로 관리하지 않는 이유 및 근거 정리 - 김승원](https://orange-middle-cbd.notion.site/Password-Encoder-Spring-Bean-1c269c2ee7df800d95a0cbc6570cc869?pvs=4)
+- [Utility Class에 Object 키워드를 사용하지 않는 이유 및 근거 정리 - 김승원](https://orange-middle-cbd.notion.site/Utility-Class-Object-1dc69c2ee7df8013b368c4bfdb3fddb8?pvs=4)
+
+## Architecture
+
+### Architecture Structure
 ``` 
 [클라이언트] <-> [외부 계층(External Layer)] <-> [내부 코어(Internal Core)] <-> [데이터 계층(Data Layer)]
 ```
@@ -45,7 +67,7 @@ AI기반 이별 후유증 극복 서비스 HHH입니다.
 - **build tool**: Gradle
 - **etc.**: Docker
 
-## Package Tree Structure
+## Package Structure
 ``` 
 com.dsm.hhh
 ├── Application.kt
