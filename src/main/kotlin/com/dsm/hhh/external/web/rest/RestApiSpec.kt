@@ -14,7 +14,11 @@ object RestApiSpec {
     const val DIARY_ALL = "/api/diary"
 
     const val USER_DEACTIVATE = "/api/user/deactivate"
+    const val USER_GET = "/api/user"
 
     const val EMOTION_CREATE = "/api/emotion"
     const val EMOTION_READ = "/api/emotion"
+
+    const val EMOTION_GRAPH = "/api/emotion/graph"
+
 }
