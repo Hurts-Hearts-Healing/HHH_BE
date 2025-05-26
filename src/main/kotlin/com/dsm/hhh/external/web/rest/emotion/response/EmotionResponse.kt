@@ -1,11 +1,11 @@
 package com.dsm.hhh.external.web.rest.emotion.response
 
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import com.dsm.hhh.internal.core.domain.model.primitive.emotion.Emotion
-import com.dsm.hhh.internal.core.domain.model.primitive.user.UserId
-
 
 data class EmotionResponse(
-    val emotion: Emotion
+    val emotion: Emotion,
+    val createdAt: CreatedAt
 )
 
 class EmotionListResponse(

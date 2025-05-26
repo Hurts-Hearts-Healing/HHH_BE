@@ -1,7 +1,9 @@
 package com.dsm.hhh.external.web.rest.emotion.mapper
 
+import com.dsm.hhh.external.error.ErrorCode
 import com.dsm.hhh.external.web.rest.emotion.form.EmotionRequestForm
 import com.dsm.hhh.external.web.rest.emotion.response.EmotionResponse
+import com.dsm.hhh.internal.common.exception.CustomExceptionFactory
 import com.dsm.hhh.internal.core.domain.model.dto.emotion.EmotionInternalDTO
 
 class EmotionMapper private constructor() {
@@ -16,7 +18,8 @@ class EmotionMapper private constructor() {
 
         fun emotionDTOToEmotionResponse(emotionInternalDTO: EmotionInternalDTO): EmotionResponse{
             return EmotionResponse(
-                emotion = emotionInternalDTO.emotion
+                emotion = emotionInternalDTO.emotion,
+                createdAt = emotionInternalDTO.createdAt ?: throw CustomExceptionFactory.badRequest(ErrorCode.INTERNAL_001)
             )
         }
 
