@@ -11,14 +11,18 @@ class CompletedEmailVerificationComponent {
 
     fun isCompletedEmail(email: Email): Mono<Boolean> {
         if (completedEmailVerificationStorage.contains(email.value())) {
-            return Mono.just(false)
+            return Mono.just(true)
         }
         
-        return Mono.just(true)
+        return Mono.just(false)
     }
 
     fun saveCompletedEmail(email: Email) {
         completedEmailVerificationStorage.put(email.value(), "")
+    }
+
+    fun deleteCompletedEmail(email: Email) {
+        completedEmailVerificationStorage.remove(email.value())
     }
     
 }

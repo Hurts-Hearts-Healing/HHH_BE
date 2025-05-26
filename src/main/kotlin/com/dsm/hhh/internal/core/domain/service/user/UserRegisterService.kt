@@ -52,6 +52,7 @@ private class UserRegisterService(
                     else -> throw CustomExceptionFactory.internalServerError(ErrorCode.INTERNAL_002)
                 }
             }
+            .doOnSuccess { completedEmailVerificationComponent.deleteCompletedEmail(userInternalDTO.email) }
             .then()
     }
 

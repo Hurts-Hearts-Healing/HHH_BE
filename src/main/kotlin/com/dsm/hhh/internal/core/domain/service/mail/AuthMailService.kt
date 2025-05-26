@@ -38,6 +38,7 @@ private class AuthMailService(
 
         if (storedCode == verifyCodeDTO.verifyCode.value()) {
             completedEmailVerificationComponent.saveCompletedEmail(verifyCodeDTO.email)
+            verificationStorage.remove(verifyCodeDTO.email.value())
 
             return Mono.just(true)
         }
