@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.data.mongodb.core.mapping.FieldType
 import java.time.LocalDate
 
-@Document(collation = CollectionSpec.EMOTION)
+@Document(collection = CollectionSpec.EMOTION)
 class EmotionEntity private constructor(
     @Id
     val id: String?,
