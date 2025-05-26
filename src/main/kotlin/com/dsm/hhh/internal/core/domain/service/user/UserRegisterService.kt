@@ -43,8 +43,8 @@ private class UserRegisterService(
             }
     }
 
-    private fun saveUser(userInternalDTO: UserInternalDTO): Mono<Void?> {
-        return userRepository.save(userInternalDTO) // TODO: 이메일 검증 로직 추가 필요
+    private fun saveUser(userInternalDTO: UserInternalDTO): Mono<Void> {
+        return userRepository.save(userInternalDTO)
             .onErrorResume {
                 when (it) {
                     is DuplicateKeyException -> throw CustomExceptionFactory.conflict(ErrorCode.AUTH_004)
