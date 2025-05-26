@@ -1,12 +1,14 @@
-## HHH
+# HHH
 AI기반 이별 후유증 극복 서비스 HHH입니다.
 
-### 아키텍처 구조
+해당 레포지토리는 HHH 서비스의 백엔드 파트입니다.
+
+## Architecture Structure
 ``` 
 [클라이언트] <-> [외부 계층(External Layer)] <-> [내부 코어(Internal Core)] <-> [데이터 계층(Data Layer)]
 ```
 
-#### Layer Description:
+### Layer Description:
 1. **External Layer**
     - 웹 컨트롤러, 보안 설정, 예외 처리
     - 외부 시스템과의 인터페이스 담당
@@ -19,7 +21,7 @@ AI기반 이별 후유증 극복 서비스 HHH입니다.
     - 데이터 영속성 처리
     - MongoDB 리포지토리 구현
 
-#### Bounded Context
+### Bounded Context
 **User Management Context**
 
 **Core:** 사용자 계정 관리, 이메일 인증, 로그인/로그아웃, 회원탈퇴
@@ -43,7 +45,7 @@ AI기반 이별 후유증 극복 서비스 HHH입니다.
 - **build tool**: Gradle
 - **etc.**: Docker
 
-### Package Tree Structure
+## Package Tree Structure
 ``` 
 com.dsm.hhh
 ├── Application.kt
@@ -64,6 +66,6 @@ com.dsm.hhh
     └── common (공통 유틸리티)
 ```
 
-### Unified Modeling Language
+## Unified Modeling Language
 - #### [UseCase Diagram](https://lucid.app/lucidchart/cac44dfd-cd7f-4f71-89dd-a0804d716efa/edit?viewport_loc=-5516%2C403%2C1583%2C1156%2C0_0&invitationId=inv_251ee9d1-3f79-420d-85c4-379aed4a681c)
 - #### [Class Diagram](https://lucid.app/lucidchart/24615d80-820c-425f-91b6-c5286565d738/edit?viewport_loc=-63%2C-38%2C1902%2C1390%2C0_0&invitationId=inv_c6fb25e7-88d1-40a8-a4cd-039b5bd788cb)
