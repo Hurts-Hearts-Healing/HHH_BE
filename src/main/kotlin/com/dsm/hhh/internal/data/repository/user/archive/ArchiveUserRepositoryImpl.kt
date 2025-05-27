@@ -13,9 +13,9 @@ private class ArchiveUserRepositoryImpl(
 ): ArchiveUserRepository {
 
     override fun save(archiveUserInternalDTO: ArchiveUserInternalDTO): Mono<ArchiveUserInternalDTO> {
-        val entity = ArchiveUserEntityMapper.toEntity(archiveUserInternalDTO)
+        val archiveUserEntity = ArchiveUserEntityMapper.toEntity(archiveUserInternalDTO)
 
-        return archiveUserMongoRepository.save(entity)
+        return archiveUserMongoRepository.save(archiveUserEntity)
             .thenReturn(archiveUserInternalDTO)
     }
 
@@ -23,9 +23,9 @@ private class ArchiveUserRepositoryImpl(
         archiveUserInternalDTO: ArchiveUserInternalDTO,
         existingArchiveUser: ArchiveUserInternalDTO
     ): Mono<ArchiveUserInternalDTO> {
-        val updatedEntity = ArchiveUserEntityMapper.toEntity(archiveUserInternalDTO, existingArchiveUser)
+        val updatedArchiveUserEntity = ArchiveUserEntityMapper.toEntity(archiveUserInternalDTO, existingArchiveUser)
 
-        return archiveUserMongoRepository.save(updatedEntity)
+        return archiveUserMongoRepository.save(updatedArchiveUserEntity)
             .thenReturn(archiveUserInternalDTO)
     }
 

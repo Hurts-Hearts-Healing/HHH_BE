@@ -18,7 +18,7 @@ private class EmotionEmojiService(
 ) : EmotionEmojiUseCase {
 
     override fun register(emotionEmojiInternalDTO: EmotionEmojiInternalDTO): Mono<Void> {
-        return currentUser.get()
+        return currentUser.getCurrentUser()
             .doOnNext { user -> emotionEmojiInternalDTO.userId = user.userId }
             .flatMap {
                 val userId = emotionEmojiInternalDTO.userId
@@ -37,7 +37,7 @@ private class EmotionEmojiService(
     }
 
     override fun findByUserId(): Flux<EmotionEmojiInternalDTO> {
-        return currentUser.get()
+        return currentUser.getCurrentUser()
             .flatMapMany { user ->
                 val userId = user.userId
                     ?: return@flatMapMany Flux.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_003))

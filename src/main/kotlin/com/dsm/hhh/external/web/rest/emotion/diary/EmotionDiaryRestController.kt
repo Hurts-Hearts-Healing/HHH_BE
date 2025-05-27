@@ -20,16 +20,16 @@ private class EmotionDiaryRestController(
 
     @PostMapping(RestApiSpec.DIARY_CREATE)
     @ResponseStatus(HttpStatus.CREATED)
-    fun write(@RequestBody emotionDiaryWriteRequestForm: EmotionDiaryWriteRequestForm): Mono<Void> {
+    fun writeDiary(@RequestBody emotionDiaryWriteRequestForm: EmotionDiaryWriteRequestForm): Mono<Void> {
         val dto = EmotionDiaryMapper.emotionDiaryWriteRequestFormToInternalDTO(emotionDiaryWriteRequestForm)
 
-        return emotionDiaryUseCase.write(dto)
+        return emotionDiaryUseCase.writeDiary(dto)
     }
 
     @GetMapping(RestApiSpec.DIARY_ALL)
     @ResponseStatus(HttpStatus.OK)
-    fun getMyEmotionDiaries(): Mono<EmotionDiariesResponse> {
-        return emotionDiaryUseCase.getMyDiaries()
+    fun getUserEmotionDiaries(): Mono<EmotionDiariesResponse> {
+        return emotionDiaryUseCase.getUserDiaries()
             .map(EmotionDiaryMapper::emotionDiaryDTOToEmotionDiaryResponse)
             .collectList()
             .map { diaries -> EmotionDiariesResponse(diaries) }

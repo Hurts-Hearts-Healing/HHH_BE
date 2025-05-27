@@ -15,10 +15,10 @@ class EmotionDiaryRepositoryImpl(
 ): EmotionDiaryRepository {
 
     override fun save(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): Mono<Void> {
-        val entity = EmotionDiaryEntityMapper.toEntity(emotionDiaryInternalDTO)
-
-        return emotionDiaryMongoRepository.save(entity)
-            .then();
+        val diaryEntity = EmotionDiaryEntityMapper.toEntity(emotionDiaryInternalDTO)
+    
+        return emotionDiaryMongoRepository.save(diaryEntity)
+            .then()
     }
 
     override fun findByUserId(userId: UserId): Flux<EmotionDiaryInternalDTO> {
@@ -34,8 +34,8 @@ class EmotionDiaryRepositoryImpl(
             .map(EmotionDiaryEntityMapper::toInternalDTO)
     }
 
-    override fun findById(dirayId: DiaryId): Mono<EmotionDiaryInternalDTO> {
-        return emotionDiaryMongoRepository.findById(dirayId.value())
+    override fun findById(diaryId: DiaryId): Mono<EmotionDiaryInternalDTO> {
+        return emotionDiaryMongoRepository.findById(diaryId.value())
             .map(EmotionDiaryEntityMapper::toInternalDTO)
     }
 

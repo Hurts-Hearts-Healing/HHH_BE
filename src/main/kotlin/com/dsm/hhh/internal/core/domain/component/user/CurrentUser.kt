@@ -17,7 +17,7 @@ class CurrentUser(
     private val userRepository: UserRepository
 ) {
 
-    fun get(): Mono<UserInternalDTO> {
+    fun getCurrentUser(): Mono<UserInternalDTO> {
         return ReactiveSecurityContextHolder.getContext()
             .map(SecurityContext::getAuthentication)
             .map(Principal::getName)

@@ -20,13 +20,13 @@ private class AuthMailRestController(
     @PostMapping(RestApiSpec.MAIL_SEND)
     @ResponseStatus(HttpStatus.CREATED)
     fun save(@RequestBody authMailDTO: AuthMailDTO): Mono<Void> {
-        return authMailUseCase.sendCodeToEmail(authMailDTO).then()
+        return authMailUseCase.sendVerificationCodeToEmail(authMailDTO).then()
     }
 
     @PostMapping(RestApiSpec.MAIL_VERIFY)
     @ResponseStatus(HttpStatus.OK)
     fun verify(@RequestBody verifyCodeDTO: VerifyCodeDTO): Mono<Boolean> {
-        return authMailUseCase.verifyCode(verifyCodeDTO)
+        return authMailUseCase.verifyEmailCode(verifyCodeDTO)
     }
 
 }

@@ -6,8 +6,8 @@ import reactor.core.publisher.Mono
 
 interface EmotionDiaryUseCase {
 
-    fun write(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): Mono<Void>
+    fun writeDiary(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): Mono<Void>
 
-    fun getMyDiaries(): Flux<EmotionDiaryInternalDTO>
+    fun getUserDiaries(): Flux<EmotionDiaryInternalDTO>
 
 }

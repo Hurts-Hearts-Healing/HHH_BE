@@ -34,14 +34,14 @@ class PasetoAuthenticationFilter(
     }
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
-        val token = extractToken(exchange.request)
-
-        return if (token != null) {
-            val authorities = listOf(SimpleGrantedAuthority("ROLE_USER")) // TODO: 현재 역할 관리는 없음
-
-            pasetoTokenUtils.parseClaims(token)
-                .map { claims ->
-                    UsernamePasswordAuthenticationToken(claims.subject, null, authorities)
+            val token = extractTokenFromRequest(exchange.request)
+    
+            return if (token != null) {
+                val defaultAuthorities = listOf(SimpleGrantedAuthority("ROLE_USER")) // TODO: 현재 역할 관리는 없음
+    
+                pasetoTokenUtils.parseClaims(token)
+                    .map { claims ->
+                        UsernamePasswordAuthenticationToken(claims.subject, null, defaultAuthorities)
                 }
                 .flatMap { authentication ->
                     chain.filter(exchange)
@@ -60,7 +60,7 @@ class PasetoAuthenticationFilter(
      * @param request 서버 HTTP 요청
      * @return 추출된 토큰 또는 null
      */
-    private fun extractToken(request: ServerHttpRequest): String? {
+    private fun extractTokenFromRequest(request: ServerHttpRequest): String? {
         val authHeader = request.headers.getFirst(HttpHeaders.AUTHORIZATION) ?: return null
 
         return if (authHeader.startsWith(TOKEN_PREFIX)) {

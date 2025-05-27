@@ -18,7 +18,7 @@ private class UserDeactivateService(
 ) : UserDeactivateUseCase {
 
     override fun deactivateUser(): Mono<Void> {
-        return currentUser.get()
+        return currentUser.getCurrentUser()
             .flatMap { user ->
                 val userId = user.userId
                     ?: return@flatMap Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005))

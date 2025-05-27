@@ -28,10 +28,10 @@ private class UserLoginService(
 ): UserLoginUseCase {
 
     /**
-     * 사용자 로그인 처리
-     * @param email 이메일
-     * @param password 비밀번호
-     * @return 생성된 토큰
+     * 사용자 로그인 처리 및 인증 토큰 발급
+     * @param email 사용자 이메일
+     * @param password 사용자 비밀번호
+     * @return 생성된 인증 토큰
      */
     override fun login(email: Email, password: Password): Mono<String> {
         return userRepository.findByEmail(email)

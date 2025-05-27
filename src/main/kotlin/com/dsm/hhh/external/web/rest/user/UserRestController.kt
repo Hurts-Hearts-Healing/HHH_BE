@@ -17,7 +17,7 @@ private class UserRestController(
     @GetMapping(RestApiSpec.USER_GET)
     @ResponseStatus(HttpStatus.OK)
     fun getMyInfo(): Mono<UserInfoResponse> {
-        return currentUser.get()
+        return currentUser.getCurrentUser()
             .map { user -> UserInfoResponse(
                 name = user.name,
                 email = user.email,

@@ -24,8 +24,9 @@ private class UserRepositoryImpl(
 ) : UserRepository {
 
     override fun save(userInternalDTO: UserInternalDTO): Mono<UserInternalDTO> {
-        val entity = UserEntityMapper.toEntity(userInternalDTO)
-        return userMongoRepository.save(entity)
+        val userEntity = UserEntityMapper.toEntity(userInternalDTO)
+
+        return userMongoRepository.save(userEntity)
             .map(UserEntityMapper::toDTO)
     }
 

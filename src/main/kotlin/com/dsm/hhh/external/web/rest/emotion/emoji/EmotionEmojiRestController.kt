@@ -3,7 +3,7 @@ package com.dsm.hhh.external.web.rest.emotion.emoji
 import com.dsm.hhh.external.web.rest.RestApiSpec
 import com.dsm.hhh.external.web.rest.emotion.emoji.form.EmotionEmojiRequestForm
 import com.dsm.hhh.external.web.rest.emotion.emoji.mapper.EmotionEmojiMapper
-import com.dsm.hhh.external.web.rest.emotion.emoji.response.EmotionListResponse
+import com.dsm.hhh.external.web.rest.emotion.emoji.response.EmotionEmojiListResponse
 import com.dsm.hhh.internal.core.usecase.emotion.emoji.EmotionEmojiUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,18 +21,18 @@ private class EmotionRestController(
     @PostMapping(RestApiSpec.EMOTION_CREATE)
     @ResponseStatus(HttpStatus.CREATED)
     fun save(@RequestBody emotionEmojiRequestForm: EmotionEmojiRequestForm): Mono<Void> {
-        val dto = EmotionEmojiMapper.Companion.emotionRequestFormToInternalDTO(emotionEmojiRequestForm)
+        val dto = EmotionEmojiMapper.emotionRequestFormToInternalDTO(emotionEmojiRequestForm)
 
         return emotionEmojiUseCase.register(dto)
     }
 
     @GetMapping(RestApiSpec.EMOTION_READ)
     @ResponseStatus(HttpStatus.OK)
-    fun getMyEmotion(): Mono<EmotionListResponse>{
+    fun getMyEmotion(): Mono<EmotionEmojiListResponse>{
         return emotionEmojiUseCase.findByUserId()
-            .map(EmotionEmojiMapper.Companion::emotionDTOToEmotionResponse)
+            .map(EmotionEmojiMapper::emotionDTOToEmotionResponse)
             .collectList()
-            .map { emotionList -> EmotionListResponse(emotionList) }
+            .map { emotionList -> EmotionEmojiListResponse(emotionList) }
     }
 
 }

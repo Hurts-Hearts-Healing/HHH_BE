@@ -14,14 +14,14 @@ import com.dsm.hhh.internal.core.domain.model.primitive.user.UserId
  * UserInternalDTO - 계층별 데이터 변환을 위한 사용자 정보 도메인 데이터 클래스
  * <p>
  *
- * @property id MongoDB에서 자동 생성되는 고유 식별자. 형식은 ObjectId
- * @property email 사용자 이메일 주소 (unique 인덱스 적용)
- * @property password 비밀번호
+ * @property userId 사용자의 고유 식별자
+ * @property email 사용자 이메일 주소 (고유 인덱스 적용)
+ * @property password 암호화된 사용자 비밀번호
  * @property name 사용자 실명
  * @property birthday 사용자 생년월일
  * @property breakupDate 마지막 이별일
- * @property emotionStatus 사용자 가입일의 감정 상태 (단위: %).
- * @property registeredAt 사용자 가입일
+ * @property emotionStatus 사용자 가입일의 감정 상태 (백분율)
+ * @property registeredAt 사용자 가입일시
  *
  * <p>
  *

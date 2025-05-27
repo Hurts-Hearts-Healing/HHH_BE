@@ -17,8 +17,8 @@ private class EmotionDiaryService(
     private val currentUser: CurrentUser
 ) : EmotionDiaryUseCase {
 
-    override fun write(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): Mono<Void> {
-        return currentUser.get()
+    override fun writeDiary(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): Mono<Void> {
+        return currentUser.getCurrentUser()
             .doOnNext { user -> emotionDiaryInternalDTO.userId = user.userId }
             .flatMap {
                 val userId = emotionDiaryInternalDTO.userId
@@ -36,8 +36,8 @@ private class EmotionDiaryService(
             }
     }
 
-    override fun getMyDiaries(): Flux<EmotionDiaryInternalDTO> {
-        return currentUser.get()
+    override fun getUserDiaries(): Flux<EmotionDiaryInternalDTO> {
+        return currentUser.getCurrentUser()
             .flatMapMany { user ->
                 val userId = user.userId
                     ?: return@flatMapMany Flux.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005))

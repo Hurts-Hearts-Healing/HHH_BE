@@ -14,9 +14,10 @@ private class EmotionEmojiRepositoryImpl(
 ): EmotionEmojiRepository {
 
     override fun save(emotionEmojiInternalDTO: EmotionEmojiInternalDTO): Mono<Void> {
-        val entity = EmotionEmojiMapper.toEntity(emotionEmojiInternalDTO)
+        val emojiEntity = EmotionEmojiMapper.toEntity(emotionEmojiInternalDTO)
 
-        return emotionEmojiMongoRepository.save(entity).then()
+        return emotionEmojiMongoRepository.save(emojiEntity)
+            .then()
     }
 
     override fun findByUserId(userId: UserId): Flux<EmotionEmojiInternalDTO> {

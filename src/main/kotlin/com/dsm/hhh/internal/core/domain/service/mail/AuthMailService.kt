@@ -16,11 +16,11 @@ private class AuthMailService(
     private val javaMailSender: JavaMailSender,
     private val completedEmailVerificationComponent: CompletedEmailVerificationComponent
 ) : AuthMailUseCase {
-    private val verificationStorage = ConcurrentHashMap<String, String>()
+    private val verificationCodeStorage = ConcurrentHashMap<String, String>()
 
-    override fun sendCodeToEmail(authMailDTO: AuthMailDTO): Mono<VerifyCodeDTO> {
+    override fun sendVerificationCodeToEmail(authMailDTO: AuthMailDTO): Mono<VerifyCodeDTO> {
         val verifyCode = VerifyCode()
-        verificationStorage[authMailDTO.email.value()] = verifyCode.value()
+        verificationCodeStorage[authMailDTO.email.value()] = verifyCode.value()
 
         val message = SimpleMailMessage()
         message.setTo(authMailDTO.email.value())
@@ -33,12 +33,12 @@ private class AuthMailService(
     }
 
 
-    override fun verifyCode(verifyCodeDTO: VerifyCodeDTO): Mono<Boolean> {
-        val storedCode = verificationStorage[verifyCodeDTO.email.value()]
+    override fun verifyEmailCode(verifyCodeDTO: VerifyCodeDTO): Mono<Boolean> {
+        val storedCode = verificationCodeStorage[verifyCodeDTO.email.value()]
 
         if (storedCode == verifyCodeDTO.verifyCode.value()) {
             completedEmailVerificationComponent.saveCompletedEmail(verifyCodeDTO.email)
-            verificationStorage.remove(verifyCodeDTO.email.value())
+            verificationCodeStorage.remove(verifyCodeDTO.email.value())
 
             return Mono.just(true)
         }

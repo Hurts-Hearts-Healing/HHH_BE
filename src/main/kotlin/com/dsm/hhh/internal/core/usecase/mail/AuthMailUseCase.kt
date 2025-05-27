@@ -6,8 +6,8 @@ import reactor.core.publisher.Mono
 
 interface AuthMailUseCase {
 
-    fun sendCodeToEmail(authMailDTO: AuthMailDTO): Mono<VerifyCodeDTO>
+    fun sendVerificationCodeToEmail(authMailDTO: AuthMailDTO): Mono<VerifyCodeDTO>
 
-    fun verifyCode(verifyCodeDTO: VerifyCodeDTO): Mono<Boolean>
+    fun verifyEmailCode(verifyCodeDTO: VerifyCodeDTO): Mono<Boolean>
 
 }
