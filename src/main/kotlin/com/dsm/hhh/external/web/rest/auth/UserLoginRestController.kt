@@ -33,12 +33,12 @@ private class UserLoginRestController(
      */
     @PostMapping(RestApiSpec.AUTH_LOGIN)
     @ResponseStatus(HttpStatus.OK)
-    fun login(@RequestBody request: UserLoginRequestForm): Mono<UserLoginResponse> {
+    fun login(@RequestBody userLoginRequestForm: UserLoginRequestForm): Mono<UserLoginResponse> {
         return userLoginUseCase.login(
-            email = request.email,
-            password = request.password
+            email = userLoginRequestForm.email,
+            password = userLoginRequestForm.password
         ).map { token ->
-            UserLoginResponse(token = token)
+            UserLoginResponse(token)
         }
     }
 

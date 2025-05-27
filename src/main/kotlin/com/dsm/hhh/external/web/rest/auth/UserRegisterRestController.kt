@@ -43,8 +43,8 @@ private class UserRegisterRestController(
      */
     @PostMapping(RestApiSpec.AUTH_REGISTER)
     @ResponseStatus(HttpStatus.CREATED)
-    fun register(@RequestBody requestForm: UserRegisterRequestForm): Mono<Void> {
-        val userInternalDTO = UserRegisterMapper.toInternalDTO(requestForm)
+    fun register(@RequestBody userRegisterRequestForm: UserRegisterRequestForm): Mono<Void> {
+        val userInternalDTO = UserRegisterMapper.toInternalDTO(userRegisterRequestForm)
 
         return userRegisterUseCase.register(userInternalDTO)
     }
