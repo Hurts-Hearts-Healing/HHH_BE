@@ -20,8 +20,8 @@ private class EmotionGraphService(
         val endDate = LocalDate.now()
         val startDate = endDate.minusDays(6)
 
-        return fetchAndProcessEmotionData(
-            fetchFunction = { emotionEmojiRepository.getEmotionStatsByDayPeriod(startDate, endDate) }
+        return getEmotionGraph(
+            dataFetcher = { emotionEmojiRepository.getEmotionStatsByDayPeriod(startDate, endDate) }
         )
     }
 
@@ -29,8 +29,8 @@ private class EmotionGraphService(
         val endDate = LocalDate.now()
         val startDate = endDate.minusWeeks(3)
 
-        return fetchAndProcessEmotionData(
-            fetchFunction = { emotionEmojiRepository.getEmotionStatsByWeekPeriod(startDate, endDate) }
+        return getEmotionGraph(
+            dataFetcher = { emotionEmojiRepository.getEmotionStatsByWeekPeriod(startDate, endDate) }
         )
     }
 
@@ -38,20 +38,20 @@ private class EmotionGraphService(
         val endDate = LocalDate.now()
         val startDate = endDate.minusMonths(5)
 
-        return fetchAndProcessEmotionData(
-            fetchFunction = { emotionEmojiRepository.getEmotionStatsByMonthPeriod(startDate, endDate) }
+        return getEmotionGraph(
+            dataFetcher = { emotionEmojiRepository.getEmotionStatsByMonthPeriod(startDate, endDate) }
         )
     }
 
-    private fun fetchAndProcessEmotionData(
-        fetchFunction: () -> Flux<EmotionAggregationResult>
+    private fun getEmotionGraph(
+        dataFetcher: () -> Flux<EmotionAggregationResult>
     ): Mono<EmotionGraphResponse> {
-        return fetchFunction()
+        return dataFetcher()
             .collectList()
-            .map { results -> processEmotionData(results) }
+            .map { results -> buildGraphResponse(results) }
     }
 
-    private fun processEmotionData(
+    private fun buildGraphResponse(
         results: List<EmotionAggregationResult>
     ): EmotionGraphResponse {
         val groupedByPeriod = results.groupBy { it.date ?: "unknown" }

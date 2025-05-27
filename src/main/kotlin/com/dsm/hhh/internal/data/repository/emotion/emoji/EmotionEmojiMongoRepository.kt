@@ -11,6 +11,4 @@ interface EmotionEmojiMongoRepository : ReactiveMongoRepository<EmotionEmojiEnti
 
     fun findByUserIdAndCreatedAt(userId: String, createdAt: LocalDate): Mono<EmotionEmojiEntity>
 
-    fun findByCreatedAtBetween(startDate: LocalDate, endDate: LocalDate): Flux<EmotionEmojiEntity>
-
 }
