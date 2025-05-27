@@ -16,6 +16,6 @@ spring:
           auth: true
           starttls:
             enable: true
-            
+
 server:
   port: 7311

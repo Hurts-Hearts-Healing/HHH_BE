@@ -44,6 +44,10 @@ dependencies {
 
 	// mail
 	implementation("org.springframework.boot:spring-boot-starter-mail:3.1.2")
+
+	// open api
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
 }
 
 kotlin {
