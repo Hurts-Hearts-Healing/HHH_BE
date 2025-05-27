@@ -23,10 +23,7 @@ abstract class EmotionEmojiAbstractRepository(
             .map(EmotionEmojiMapper::toDTO)
     }
 
-    override fun findByUserIdAndCreatedAt(
-        userId: UserId,
-        createdAt: CreatedAt
-    ): Mono<EmotionEmojiInternalDTO> {
+    override fun findByUserIdAndCreatedAt(userId: UserId, createdAt: CreatedAt): Mono<EmotionEmojiInternalDTO> {
         return emotionEmojiMongoRepository.findByUserIdAndCreatedAt(userId.value(), createdAt.value())
             .map(EmotionEmojiMapper::toDTO)
     }

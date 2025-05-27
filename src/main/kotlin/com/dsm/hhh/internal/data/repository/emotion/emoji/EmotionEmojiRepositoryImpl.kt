@@ -1,12 +1,11 @@
 package com.dsm.hhh.internal.data.repository.emotion.emoji
 
 import com.dsm.hhh.external.database.mongo.MongoQueryUtils
-import com.dsm.hhh.external.error.ErrorCode
-import com.dsm.hhh.internal.common.exception.CustomExceptionFactory
 import com.dsm.hhh.internal.data.repository.CollectionSpec
 import com.dsm.hhh.internal.data.repository.emotion.emoji.result.EmotionAggregationResult
 import com.dsm.hhh.internal.data.repository.emotion.emoji.result.EmotionDailyAggregationResult
 import com.dsm.hhh.internal.data.repository.emotion.emoji.result.WeeklyEmotionAggregationResult
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators
 import org.springframework.data.mongodb.core.aggregation.DateOperators
@@ -21,10 +20,7 @@ private class EmotionEmojiRepositoryImpl(
     emotionEmojiMongoRepository: EmotionEmojiMongoRepository
 ): EmotionEmojiAbstractRepository(emotionEmojiMongoRepository) {
 
-    override fun getEmotionStatsByDayPeriod(
-        startDate: LocalDate,
-        endDate: LocalDate
-    ): Flux<EmotionAggregationResult> {
+    override fun getEmotionStatsByDayPeriod(startDate: LocalDate, endDate: LocalDate): Flux<EmotionAggregationResult> {
         val aggregation = Aggregation.newAggregation(
             Aggregation.match(
                 Criteria.where(EmotionEmojiEntity::createdAt.name)
@@ -48,17 +44,13 @@ private class EmotionEmojiRepositoryImpl(
         }
     }
 
-    override fun getEmotionStatsByWeekPeriod(
-        startDate: LocalDate,
-        endDate: LocalDate
-    ): Flux<EmotionAggregationResult> {
+    override fun getEmotionStatsByWeekPeriod(startDate: LocalDate, endDate: LocalDate): Flux<EmotionAggregationResult> {
         val aggregation = Aggregation.newAggregation(
             Aggregation.match(
                 Criteria.where(EmotionEmojiEntity::createdAt.name)
                     .gte(startDate).lte(endDate)
             ),
 
-            // 주의 시작일(월요일) 계산
             Aggregation.addFields()
                 .addField("weekStart")
                 .withValue(
@@ -71,7 +63,7 @@ private class EmotionEmojiRepositoryImpl(
                             ).subtract(
                                 ArithmeticOperators.Subtract.valueOf(
                                     DateOperators.DayOfWeek.dayOfWeek(EmotionEmojiEntity::createdAt.name)
-                                ).subtract(1) // 월요일을 1로 만들기 위해
+                                ).subtract(1)
                             )
                         )
                 )
@@ -82,9 +74,9 @@ private class EmotionEmojiRepositoryImpl(
 
             Aggregation.project("count")
                 .and("_id.weekStart").`as`("weekStart")
-                .and("_id.${EmotionEmojiEntity::emotion.name}").`as`("emotion"),
+                .and("_id.${EmotionEmojiEntity::emotion.name}").`as`(EmotionEmojiEntity::emotion.name),
 
-            Aggregation.sort(org.springframework.data.domain.Sort.by("weekStart"))
+            Aggregation.sort(Sort.by("weekStart"))
         )
 
         return mongoQueryUtils.find(
@@ -95,16 +87,15 @@ private class EmotionEmojiRepositoryImpl(
             EmotionAggregationResult(
                 emotion = result.emotion,
                 count = result.count,
-                date = result.weekStart?.let { formatWeekPeriod(it) }
+                date = result.weekStart?.let { weekStart ->
+                    val weekEnd = weekStart.plusDays(6)
+                    "$weekStart ~ $weekEnd"
+                }
             )
         }
     }
 
-    // 월별 감정 통계 (그래프용)
-    override fun getEmotionStatsByMonthPeriod(
-        startDate: LocalDate,
-        endDate: LocalDate
-    ): Flux<EmotionAggregationResult> {
+    override fun getEmotionStatsByMonthPeriod(startDate: LocalDate, endDate: LocalDate): Flux<EmotionAggregationResult> {
         val aggregation = Aggregation.newAggregation(
             Aggregation.match(
                 Criteria.where(EmotionEmojiEntity::createdAt.name)
@@ -127,9 +118,9 @@ private class EmotionEmojiRepositoryImpl(
 
             Aggregation.project("count")
                 .andExpression("concat(toString(_id.year), '-', toString(_id.month))").`as`("date")
-                .and("_id.${EmotionEmojiEntity::emotion.name}").`as`("emotion"),
+                .and("_id.${EmotionEmojiEntity::emotion.name}").`as`(EmotionEmojiEntity::emotion.name),
 
-            Aggregation.sort(org.springframework.data.domain.Sort.by("date"))
+            Aggregation.sort(Sort.by("date"))
         )
 
         return mongoQueryUtils.find(
@@ -137,11 +128,6 @@ private class EmotionEmojiRepositoryImpl(
             CollectionSpec.EMOTION,
             EmotionAggregationResult::class.java
         )
-    }
-
-    private fun formatWeekPeriod(weekStart: LocalDate): String {
-        val weekEnd = weekStart.plusDays(6)
-        return "$weekStart ~ $weekEnd"
     }
 
 }

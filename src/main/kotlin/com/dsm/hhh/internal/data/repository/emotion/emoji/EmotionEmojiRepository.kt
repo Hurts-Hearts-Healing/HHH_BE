@@ -18,13 +18,8 @@ interface EmotionEmojiRepository {
 
     fun getEmotionStatsByDayPeriod(startDate: LocalDate, endDate: LocalDate): Flux<EmotionAggregationResult>
 
-    fun getEmotionStatsByWeekPeriod(
-        startDate: LocalDate,
-        endDate: LocalDate
-    ): Flux<EmotionAggregationResult>
+    fun getEmotionStatsByWeekPeriod(startDate: LocalDate, endDate: LocalDate): Flux<EmotionAggregationResult>
 
-    fun getEmotionStatsByMonthPeriod(
-        startDate: LocalDate,
-        endDate: LocalDate
-    ): Flux<EmotionAggregationResult>
+    fun getEmotionStatsByMonthPeriod(startDate: LocalDate, endDate: LocalDate): Flux<EmotionAggregationResult>
+
 }
