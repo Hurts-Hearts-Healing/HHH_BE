@@ -9,4 +9,5 @@ object CollectionSpec {
 
     const val EMOTION = "emotion-collection"
 
+    const val ANALYSIS = "emotion-analysis"
 }
