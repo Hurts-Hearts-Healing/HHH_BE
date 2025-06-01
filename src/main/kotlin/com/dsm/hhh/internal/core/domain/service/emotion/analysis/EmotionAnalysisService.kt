@@ -21,7 +21,7 @@ class EmotionAnalysisService(
     private val openAiClient: OpenAiClient
 ) : EmotionAnalysisUseCase {
     override fun save(emotionDiaryInternalDTO: EmotionDiaryInternalDTO): Mono<Void> {
-        return currentUser.get()
+        return currentUser.getCurrentUser()
             .switchIfEmpty(Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005)))
             .flatMap { user ->
                 val userId = user.userId
