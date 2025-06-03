@@ -12,7 +12,7 @@ class AuthMailRepositoryImpl(
     private val database: ConcurrentHashMap<String, String> = ConcurrentHashMap()
 
     override fun save(verifyCodeDTO: VerifyCodeDTO): Mono<VerifyCodeDTO> {
-        database[verifyCodeDTO.email] = verifyCodeDTO.verifyCode
+        database[verifyCodeDTO.email.toString()] = verifyCodeDTO.verifyCode.toString()
         return Mono.just(verifyCodeDTO)
     }
 

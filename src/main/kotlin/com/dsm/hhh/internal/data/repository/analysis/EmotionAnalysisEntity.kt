@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
 
-@Document(collection = CollectionSpec.EMOTION_ANALYSIS)
+@Document(collection = CollectionSpec.ANALYSIS)
 class EmotionAnalysisEntity private constructor(
     @Id
     val id: String? = null,
