@@ -17,6 +17,8 @@ enum class ErrorCode(
 
     EMOTION_001("EMOTION_001", "이미 오늘의 감정을 선택했습니다."),
 
+    ANALYSIS_001("ANALYSIS_001", "분석에 실패하였습니다."),
+
     INTERNAL_001("INTERNAL_001", "데이터베이스 연결에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요."),
     INTERNAL_002("INTERNAL_002", "요청 처리 중 예상치 못한 오류가 발생했습니다. 문제가 지속될 경우 개발팀에 문의해주십시오."),
 
