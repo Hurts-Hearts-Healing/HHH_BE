@@ -19,3 +19,8 @@ spring:
 
 server:
   port: 7311
+
+google:
+  gemini:
+    api:
+      key: ${gemini}
