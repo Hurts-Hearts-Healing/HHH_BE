@@ -9,6 +9,6 @@ data class EmotionAnalysisResponse(
     val createdAt: CreatedAt?
 )
 
-class EmotionAnalysisGroupResponse(
-    val analysis : EmotionAnalysisResponse
+data class EmotionAnalysisListResponse(
+    val analysis : List<EmotionAnalysisResponse>
 )
