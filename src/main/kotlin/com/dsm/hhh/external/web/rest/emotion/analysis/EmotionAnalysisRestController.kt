@@ -2,7 +2,8 @@ package com.dsm.hhh.external.web.rest.emotion.analysis
 
 import com.dsm.hhh.external.web.rest.RestApiSpec
 import com.dsm.hhh.external.web.rest.emotion.analysis.mapper.EmotionAnalysisMapper
-import com.dsm.hhh.external.web.rest.emotion.analysis.response.EmotionAnalysisGroupResponse
+import com.dsm.hhh.external.web.rest.emotion.analysis.response.EmotionAnalysisListResponse
+import com.dsm.hhh.external.web.rest.emotion.analysis.response.EmotionAnalysisResponse
 import com.dsm.hhh.internal.core.usecase.emotion.analysis.EmotionAnalysisUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,13 +23,12 @@ class EmotionAnalysisRestController(
         return emotionAnalysisUseCase.save(diaryId)
     }
 
-    @GetMapping(RestApiSpec.EMOTION_ANALYSIS)
+    @GetMapping(RestApiSpec.EMOTION_GET)
     @ResponseStatus(HttpStatus.OK)
-    fun findById(
-        @PathVariable("diary-id") diaryId: String
-    ): Mono<EmotionAnalysisGroupResponse> {
-        return emotionAnalysisUseCase.findById(diaryId)
+    fun findByUserId(): Mono<EmotionAnalysisListResponse> {
+        return emotionAnalysisUseCase.findByUserId()
             .map(EmotionAnalysisMapper::toResponse)
-            .map { analysis -> EmotionAnalysisGroupResponse(analysis) }
+            .collectList()
+            .map { analysis -> EmotionAnalysisListResponse(analysis) }
     }
 }
