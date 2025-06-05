@@ -6,6 +6,7 @@ import com.dsm.hhh.internal.common.exception.CustomExceptionFactory
 import com.dsm.hhh.internal.core.client.GeminiClient
 import com.dsm.hhh.internal.core.domain.component.user.CurrentUser
 import com.dsm.hhh.internal.core.domain.model.dto.emotion.analysis.EmotionAnalysisInternalDTO
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import com.dsm.hhh.internal.core.domain.model.primitive.diary.DiaryId
 import com.dsm.hhh.internal.core.usecase.emotion.analysis.EmotionAnalysisUseCase
 import com.dsm.hhh.internal.data.repository.emotion.analysis.EmotionAnalysisRepository

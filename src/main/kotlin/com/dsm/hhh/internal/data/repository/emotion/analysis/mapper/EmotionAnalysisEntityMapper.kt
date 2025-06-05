@@ -11,8 +11,7 @@ class EmotionAnalysisEntityMapper private constructor(){
             return EmotionAnalysisEntity(
                 userId = dto.userId,
                 diaryId = dto.diaryId ?: throw IllegalArgumentException("diary Id가 null입니다."),
-                emotion = dto.emotion,
-                createdAt = dto.createdAt
+                emotion = dto.emotion
             )
         }
 
@@ -20,8 +19,7 @@ class EmotionAnalysisEntityMapper private constructor(){
             return EmotionAnalysisInternalDTO(
                 userId = entity.userId,
                 diaryId = entity.diaryId,
-                emotion = entity.emotion,
-                createdAt = entity.createdAt
+                emotion = entity.emotion
             )
         }
     }

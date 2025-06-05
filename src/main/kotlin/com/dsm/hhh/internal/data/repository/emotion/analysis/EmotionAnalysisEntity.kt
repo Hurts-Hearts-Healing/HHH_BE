@@ -4,6 +4,8 @@ import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import com.dsm.hhh.internal.data.repository.CollectionSpec
+import org.springframework.data.mongodb.core.mapping.Field
+import org.springframework.data.mongodb.core.mapping.FieldType
 import java.time.LocalDate
 
 
@@ -18,12 +20,12 @@ class EmotionAnalysisEntity private constructor(
 
     val emotion: String,
 
-    val createdAt: CreatedAt?,
+    @Field(targetType = FieldType.DATE_TIME)
+    val createdAt: LocalDate,
 ) {
     constructor(
         userId: String,
         diaryId: String,
         emotion: String,
-        createdAt: CreatedAt?
-    ) : this(null, userId, diaryId, emotion, createdAt)
+    ) : this(null, userId, diaryId, emotion, LocalDate.now())
 }

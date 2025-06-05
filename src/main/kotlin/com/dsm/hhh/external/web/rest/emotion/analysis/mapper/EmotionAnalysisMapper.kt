@@ -21,8 +21,7 @@ class EmotionAnalysisMapper private constructor() {
             return EmotionAnalysisEntity(
                 userId = dto.userId,
                 diaryId = dto.diaryId ?: throw IllegalArgumentException(""),
-                emotion = dto.emotion,
-                createdAt = dto.createdAt
+                emotion = dto.emotion
             )
         }
     }
