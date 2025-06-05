@@ -2,7 +2,7 @@ package com.dsm.hhh.external.web.rest.emotion.analysis
 
 import com.dsm.hhh.external.web.rest.RestApiSpec
 import com.dsm.hhh.external.web.rest.emotion.analysis.mapper.EmotionAnalysisMapper
-import com.dsm.hhh.external.web.rest.emotion.analysis.response.EmotionAnalysisResponse
+import com.dsm.hhh.external.web.rest.emotion.analysis.response.EmotionAnalysisGroupResponse
 import com.dsm.hhh.internal.core.usecase.emotion.analysis.EmotionAnalysisUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,16 +16,20 @@ import reactor.core.publisher.Mono
 class EmotionAnalysisRestController(
     private val emotionAnalysisUseCase: EmotionAnalysisUseCase
 ) {
-    @PostMapping(RestApiSpec.EMOTION_ANALYSIS)
+    @PostMapping(RestApiSpec.EMOTION_ANALYSIS_SAVE)
     @ResponseStatus(HttpStatus.OK)
-    fun save(@PathVariable("id") diaryId: String): Mono<Void> {
+    fun save(@PathVariable("diary-id") diaryId: String): Mono<Void> {
         return emotionAnalysisUseCase.save(diaryId)
     }
 
     @GetMapping(RestApiSpec.EMOTION_ANALYSIS)
     @ResponseStatus(HttpStatus.OK)
-    fun findByUserIdAndDiaryId(@PathVariable("id") diaryId: String): Mono<EmotionAnalysisResponse> {
-        return emotionAnalysisUseCase.findByUserIdAndDiaryId(diaryId)
+    fun findByUserIdAndDiaryId(
+        @PathVariable("user-id") userId: String,
+        @PathVariable("diary-id") diaryId: String
+    ): Mono<EmotionAnalysisGroupResponse> {
+        return emotionAnalysisUseCase.findFirstByUserIdAndDiaryId(userId, diaryId)
             .map(EmotionAnalysisMapper::toResponse)
+            .map { analysis -> EmotionAnalysisGroupResponse(analysis) }
     }
 }
