@@ -11,6 +11,7 @@ import com.dsm.hhh.internal.core.usecase.emotion.analysis.EmotionAnalysisUseCase
 import com.dsm.hhh.internal.data.repository.emotion.analysis.EmotionAnalysisRepository
 import com.dsm.hhh.internal.data.repository.emotion.diary.EmotionDiaryRepository
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
@@ -36,7 +37,7 @@ class EmotionAnalysisService(
                         openAiClient.analyzeEmotion(content)
                             .flatMap { emotionResult ->
                                 val analysis = EmotionAnalysisInternalDTO(
-                                    userId = userId.toString(),
+                                    userId = user.userId.value(),
                                     diaryId = diaryId,
                                     emotion = emotionResult
                                 )
@@ -47,14 +48,14 @@ class EmotionAnalysisService(
             .then()
     }
 
-    override fun findById(diaryId: String): Mono<EmotionAnalysisInternalDTO> {
+    override fun findByUserId(): Flux<EmotionAnalysisInternalDTO> {
         return currentUser.getCurrentUser()
             .switchIfEmpty(Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005)))
-            .flatMap { user ->
+            .flatMapMany { user ->
                 val userId = user.userId
-                    ?: return@flatMap Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005))
+                    ?: return@flatMapMany Flux.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005))
 
-                emotionAnalysisRepository.findById(diaryId)
+                emotionAnalysisRepository.findByUserId(userId)
             }
     }
 }
