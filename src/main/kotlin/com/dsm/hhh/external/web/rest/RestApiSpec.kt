@@ -21,5 +21,6 @@ object RestApiSpec {
 
     const val EMOTION_GRAPH = "/api/emotion/graph"
     const val EMOTION_ANALYSIS = "/api/emotion/analysis/{diary-id}"
+    const val EMOTION_GET = "/api/emotion/analysis"
 
 }
