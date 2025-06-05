@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono
 class EmotionAnalysisRestController(
     private val emotionAnalysisUseCase: EmotionAnalysisUseCase
 ) {
-    @PostMapping(RestApiSpec.EMOTION_ANALYSIS_SAVE)
+    @PostMapping(RestApiSpec.EMOTION_ANALYSIS)
     @ResponseStatus(HttpStatus.OK)
     fun save(@PathVariable("diary-id") diaryId: String): Mono<Void> {
         return emotionAnalysisUseCase.save(diaryId)
@@ -24,11 +24,10 @@ class EmotionAnalysisRestController(
 
     @GetMapping(RestApiSpec.EMOTION_ANALYSIS)
     @ResponseStatus(HttpStatus.OK)
-    fun findByUserIdAndDiaryId(
-        @PathVariable("user-id") userId: String,
+    fun findById(
         @PathVariable("diary-id") diaryId: String
     ): Mono<EmotionAnalysisGroupResponse> {
-        return emotionAnalysisUseCase.findFirstByUserIdAndDiaryId(userId, diaryId)
+        return emotionAnalysisUseCase.findById(diaryId)
             .map(EmotionAnalysisMapper::toResponse)
             .map { analysis -> EmotionAnalysisGroupResponse(analysis) }
     }

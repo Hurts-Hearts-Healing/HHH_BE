@@ -47,14 +47,14 @@ class EmotionAnalysisService(
             .then()
     }
 
-    override fun findFirstByUserIdAndDiaryId(userId: String, diaryId: String): Mono<EmotionAnalysisInternalDTO> {
+    override fun findById(diaryId: String): Mono<EmotionAnalysisInternalDTO> {
         return currentUser.getCurrentUser()
             .switchIfEmpty(Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005)))
             .flatMap { user ->
                 val userId = user.userId
                     ?: return@flatMap Mono.error(CustomExceptionFactory.unauthorized(ErrorCode.AUTH_005))
 
-                emotionAnalysisRepository.findByUserIdAndDiaryId(userId.value(), DiaryId(diaryId).value())
+                emotionAnalysisRepository.findById(diaryId)
             }
     }
 }
