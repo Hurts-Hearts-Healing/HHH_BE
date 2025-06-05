@@ -1,12 +1,12 @@
 package com.dsm.hhh.external.web.rest.emotion.analysis.response
 
-import java.time.LocalDate
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 
-class EmotionAnalysisResponse(
+data class EmotionAnalysisResponse(
     val userId: String,
     val diaryId: String,
     val emotion: String,
-    val createdAt: LocalDate?
+    val createdAt: CreatedAt?
 )
 
 class EmotionAnalysisGroupResponse(

@@ -1,14 +1,13 @@
 package com.dsm.hhh.internal.data.repository.emotion.analysis
 
-import com.dsm.hhh.internal.core.domain.model.primitive.diary.DiaryId
-import com.dsm.hhh.internal.data.repository.CollectionSpec
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import org.springframework.data.mongodb.core.mapping.Field
+import com.dsm.hhh.internal.data.repository.CollectionSpec
 import java.time.LocalDate
 
 
-@Document(collation = CollectionSpec.ANALYSIS)
+@Document(collection = CollectionSpec.ANALYSIS)
 class EmotionAnalysisEntity private constructor(
     @Id
     val id: String? = null,
@@ -19,12 +18,12 @@ class EmotionAnalysisEntity private constructor(
 
     val emotion: String,
 
-    val createdAt: LocalDate?,
+    val createdAt: CreatedAt?,
 ) {
     constructor(
         userId: String,
         diaryId: String,
         emotion: String,
-        createdAt: LocalDate?
+        createdAt: CreatedAt?
     ) : this(null, userId, diaryId, emotion, createdAt)
 }

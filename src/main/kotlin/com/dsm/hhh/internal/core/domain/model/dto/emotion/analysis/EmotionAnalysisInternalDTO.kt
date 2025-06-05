@@ -1,6 +1,6 @@
 package com.dsm.hhh.internal.core.domain.model.dto.emotion.analysis
 
-import java.time.LocalDate
+import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 
 class EmotionAnalysisInternalDTO(
     val userId: String,
@@ -9,7 +9,7 @@ class EmotionAnalysisInternalDTO(
 
     val emotion: String,
 
-    val createdAt: LocalDate?,
+    val createdAt: CreatedAt?,
 
     ) {
     constructor(
