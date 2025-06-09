@@ -10,7 +10,7 @@ class CompletedEmailVerificationComponent {
     private val completedEmailVerificationStorage = ConcurrentHashMap<String, String>()
 
     fun isCompletedEmail(email: Email): Mono<Boolean> {
-        if (completedEmailVerificationStorage.contains(email.value())) {
+        if (completedEmailVerificationStorage.containsKey(email.value())) {
             return Mono.just(true)
         }
         
