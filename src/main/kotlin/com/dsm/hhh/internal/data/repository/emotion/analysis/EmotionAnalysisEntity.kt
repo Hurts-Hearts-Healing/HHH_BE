@@ -1,6 +1,5 @@
 package com.dsm.hhh.internal.data.repository.emotion.analysis
 
-import com.dsm.hhh.internal.core.domain.model.primitive.diary.CreatedAt
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import com.dsm.hhh.internal.data.repository.CollectionSpec
