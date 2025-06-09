@@ -16,6 +16,11 @@ spring:
           auth: true
           starttls:
             enable: true
-            
+
 server:
   port: 7311
+
+google:
+  gemini:
+    api:
+      key: ${gemini}
