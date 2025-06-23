@@ -1,17 +1,19 @@
 package com.dsm.hhh.internal.core.client
 
+import com.dsm.hhh.external.web.client.WebClientRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
-import org.springframework.http.MediaType
 
 @Component
 class GeminiClientImpl(
-    private val webClient: WebClient,
+    private val webClientRequest: WebClientRequest,
 
     @Value("\${google.gemini.api.key}")
-    private val apiKey: String
+    private val apiKey: String,
+
+    @Value("\${google.gemini.api.uri}")
+    private val apiUri: String
 ) : GeminiClient {
 
     override fun analyzeEmotion(text: String): Mono<String> {
@@ -25,12 +27,7 @@ class GeminiClientImpl(
             )
         )
 
-        return webClient.post()
-            .uri("https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=$apiKey")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(requestBody)
-            .retrieve()
-            .bodyToMono(Map::class.java)
+        return webClientRequest.post(apiUri + apiKey, requestBody)
             .map { response ->
                 val candidates = response["candidates"] as? List<*> ?: return@map "감정 분석 실패"
                 val first = candidates.firstOrNull() as? Map<*, *>
